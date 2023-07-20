@@ -1,3 +1,5 @@
 postgresql-client
-mongo-client
+#mongo-client
 gzip
+python3
+python3-pip

@@ -1,0 +1,7 @@
+**/*.md
+junk/
+.git/
+Dockerfile
+.local/
+tools/
+**/*-prod*

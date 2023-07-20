@@ -17,12 +17,15 @@ then
     exit 1
 fi
 
-HOST=$1
-DATABASE=$2
-USERNAME=$3
-PASSWORD=$4
+HOST=${!1}
+DATABASE=${!2}
+USERNAME=${!3}
+PASSWORD=${!4}
 START_DATE=$(date +%Y-%m-%d_%H-%M-%S_)
 
-mkdir -p $BACKUP_DIR/pg_dump/$START_DATE
-
+mkdir -p $BACKUP_DIR/pg_dump/
+echo "Trying dump of '$DATABASE' in '$HOST'..."
 PGPASSWORD=$PASSWORD pg_dump --host=$HOST --dbname=$DATABASE --username=$USERNAME --data-only --no-owner | gzip > $BACKUP_DIR/pg_dump/$START_DATE$OUTPUT_FILENAME.sql.gz
+
+echo "Starting upload..."
+python --version

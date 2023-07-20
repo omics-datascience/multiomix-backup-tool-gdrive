@@ -22,9 +22,12 @@ DATABASE=${!2}
 USERNAME=${!3}
 PASSWORD=${!4}
 START_DATE=$(date +%Y-%m-%d_%H-%M-%S_)
+SCRIPTS_DIR=${SCRIPTS_DIR:-"/scripts"}
+BACKUP_DIR=${BACKUP_DIR:-"/backup"}
 
 mkdir -p $BACKUP_DIR/pg_dump/
 echo "Trying dump of '$DATABASE' in '$HOST'..."
 PGPASSWORD=$PASSWORD pg_dump --host=$HOST --dbname=$DATABASE --username=$USERNAME --data-only --no-owner | gzip > $BACKUP_DIR/pg_dump/$START_DATE$OUTPUT_FILENAME.sql.gz
 
 echo "Starting upload..."
+bash $SCRIPTS_DIR/upload_file.sh "$BACKUP_DIR/pg_dump/$START_DATE$OUTPUT_FILENAME.sql.gz"

@@ -29,8 +29,11 @@ BACKUP_DIR=${BACKUP_DIR:-"/backup"}
 SCRIPTS_DIR=${SCRIPTS_DIR:-"/scripts"}
 
 OUTPUT_FILENAME=${2:-$DEFAULT_OUTPUT}
+
+mkdir -p $BACKUP_DIR/archives/
+
 echo "Creating archive of parent folder '$PARENT_FOLDER' in '$BACKUP_DIR/$OUTPUT_FILENAME'..."
 
-tar -cvf $BACKUP_DIR/$OUTPUT_FILENAME $PARENT_FOLDER
+tar -cvf $BACKUP_DIR/archives/$OUTPUT_FILENAME $PARENT_FOLDER
 
-bash $SCRIPTS_DIR/upload_file.sh "$BACKUP_DIR/$OUTPUT_FILENAME"
+bash $SCRIPTS_DIR/upload_file.sh "$BACKUP_DIR/archives/$OUTPUT_FILENAME"

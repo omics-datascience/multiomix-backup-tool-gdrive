@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: multiomix-backup-tool-gdrive-secrets
+  namespace: omicsdatascience
+type: Opaque
+stringData:
+  google-key.json: |
+    {
+    "type": "service_account",
+    "project_id": "<project-id>",
+    "private_key_id": "<service-account-private-key-id>",
+    "private_key": "-----BEGIN PRIVATE KEY-----\n<service-account-private-key>\n-----END PRIVATE KEY-----\n",
+    "client_email": "<account-id>@<project-id>.iam.gserviceaccount.com",
+    "client_id": "<client-id>",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/<account-id>%40<project-id>.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+    }
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: multiomix-backup-tool-gdrive
+  name: multiomix-backup-tool-gdrive
+  namespace: omicsdatascience
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multiomix-backup-tool-gdrive
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: multiomix-backup-tool-gdrive
+    spec:
+      volumes:
+        - name: google-secret
+          secret:
+            secretName: multiomix-backup-tool-gdrive-secrets       
+      containers:
+      - image: omicsdatascience/multiomix-backup-tool-gdrive:0.1.0
+        name: multiomix-backup-tool-gdrive
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 10000;done"]
+        env:       
+        - name: PARENT_FOLDER_ID
+          value: <parent-folder-id>         
+        resources: {}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: "/config/"
+            name: google-key.json
+            readOnly: true         
+status: {}

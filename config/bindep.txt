@@ -1,5 +1,8 @@
-postgresql-client
 #mongo-client
+curl
+file
 gzip
-tar
 jq
+openssl
+postgresql-client
+tar

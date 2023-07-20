@@ -4,7 +4,3 @@ echo "Installing OS Packages..."
 PKG_LIST=$(grep -v '#' /config/bindep.txt | tr '\n' ' ')
 echo "To be installed: $PKG_LIST"
 apt-get update && apt-get install -y $PKG_LIST
-
-echo "Installing Python Packages..."
-python3 -m pip install --upgrade pip
-

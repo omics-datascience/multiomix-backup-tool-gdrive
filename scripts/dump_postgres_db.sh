@@ -13,7 +13,7 @@ if [ $# -lt 4 ]
 then
     echo "Error: Missing arguments." 1>/dev/stderr
     echo -e "\nUsage:"
-    echo -e "    ./dump_postgres_db.sh <host> <database-name> <user-env-var-name> <pass-env-var-name>\n"
+    echo -e "    $0 <host> <database-name> <user-env-var-name> <pass-env-var-name>\n"
     exit 1
 fi
 
@@ -28,4 +28,3 @@ echo "Trying dump of '$DATABASE' in '$HOST'..."
 PGPASSWORD=$PASSWORD pg_dump --host=$HOST --dbname=$DATABASE --username=$USERNAME --data-only --no-owner | gzip > $BACKUP_DIR/pg_dump/$START_DATE$OUTPUT_FILENAME.sql.gz
 
 echo "Starting upload..."
-python --version

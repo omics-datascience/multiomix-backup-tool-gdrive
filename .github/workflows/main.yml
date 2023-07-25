@@ -5,7 +5,20 @@ on:
       - "main"
       - "master"
 jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get version for tagging
+        run: SETTINGSFILE=$(pwd)/config/version.txt ./tools/get_version.sh >> $GITHUB_ENV            
+      - name: Create and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CUSTOM_TAG: ${{ env.VERSION }}  
   docker-multiomix-backup-tool-gdrive:
+    needs: [tag-release]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,16 +40,3 @@ jobs:
           context: .
           push: true
           tags: omicsdatascience/multiomix-backup-tool-gdrive:${{ env.VERSION }}
-  tag-release:
-    needs: [docker-multiomix-backup-tool-gdrive]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Get version for tagging
-        run: SETTINGSFILE=$(pwd)/config/version.txt ./tools/get_version.sh >> $GITHUB_ENV            
-      - name: Create and push tag
-        uses: anothrNick/github-tag-action@1.36.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CUSTOM_TAG: ${{ env.VERSION }}

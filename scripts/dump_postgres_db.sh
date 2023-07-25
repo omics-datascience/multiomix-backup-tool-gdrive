@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   This command will create a dump file of an postgres data base and will save inside
+#   This command will create a dump file of a postgres database and will save inside
 #   a folder called like the db inside BACKUP_DIR environment variable.
 #
 #   Usage:
@@ -13,7 +13,7 @@ if [ $# -lt 4 ]
 then
     echo "Error: Missing arguments." 1>/dev/stderr
     echo -e "\nUsage:"
-    echo -e "    $0 <host> <database-name> <user-env-var-name> <pass-env-var-name>\n"
+    echo -e "    $0 <host-env-var-name> <databaseenv-var-name> <user-env-var-name> <pass-env-var-name>\n"
     exit 1
 fi
 

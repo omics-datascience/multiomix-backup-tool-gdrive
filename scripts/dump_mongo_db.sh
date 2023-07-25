@@ -24,7 +24,7 @@ PASSWORD=${!4}
 START_DATE=$(date +%Y-%m-%d_%H-%M-%S_)
 SCRIPTS_DIR=${SCRIPTS_DIR:-"/scripts"}
 BACKUP_DIR=${BACKUP_DIR:-"/backup"}
-
+$OUTPUT_FILENAME=$DATABASE
 mkdir -p $BACKUP_DIR/mongo_dump/
 echo "Trying dump of '$DATABASE' in '$HOST'..."
 mongodump --host=$HOST --port=27017  -d="$DATABASE" --authenticationDatabase="admin" -u="$USERNAME" -p="$PASSWORD" --gzip --archive="$BACKUP_DIR/mongo_dump/$START_DATE$OUTPUT_FILENAME.archive" -vv

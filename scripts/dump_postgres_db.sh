@@ -24,7 +24,7 @@ PASSWORD=${!4}
 START_DATE=$(date +%Y-%m-%d_%H-%M-%S_)
 SCRIPTS_DIR=${SCRIPTS_DIR:-"/scripts"}
 BACKUP_DIR=${BACKUP_DIR:-"/backup"}
-$OUTPUT_FILENAME=$DATABASE
+OUTPUT_FILENAME=$DATABASE
 
 mkdir -p $BACKUP_DIR/pg_dump/
 echo "Trying dump of '$DATABASE' in '$HOST'..."

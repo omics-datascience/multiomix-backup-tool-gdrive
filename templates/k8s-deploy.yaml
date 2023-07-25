@@ -48,7 +48,7 @@ spec:
           secret:
             secretName: multiomix-backup-tool-gdrive-secrets       
       containers:
-      - image: omicsdatascience/multiomix-backup-tool-gdrive:0.1.0
+      - image: omicsdatascience/multiomix-backup-tool-gdrive:0.5.0
         name: multiomix-backup-tool-gdrive
         command: ["/bin/sh"]
         args: ["-c", "while true; do echo hello; sleep 10000;done"]
